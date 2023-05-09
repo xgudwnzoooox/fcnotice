@@ -20,6 +20,9 @@ function CreateContent() {
     // formData.append("title", e.target.title.value);
     // 질문1-2.
     // const add = () => setCount((prev) => prev + 1);
+    // const add = () => setCount(count+1);
+
+    // const toggle = () => setCount((prev) => !prev );
     // const toggle = () => setHide(!hide);
 
     formData.append("description", description);
