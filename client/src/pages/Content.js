@@ -12,32 +12,32 @@ function Content() {
   const [contentDetail, setContentDetail] = useState([]);
 
   // 질문7-1
-  // const [views, setViews] = useState(false);
-  // const updateContentViews = async () => {
-  //   if (views) {
-  //     await axios.post("http://localhost:4000/content/update_content_process", {
-  //       id,
-  //     });
-  //     setViews(false);
-  //   }
-  // };
+  const [views, setViews] = useState(false);
+  const updateContentViews = async () => {
+    if (views) {
+      await axios.post("http://localhost:4000/content/update_content_process", {
+        id,
+      });
+      setViews(false);
+    }
+  };
 
-  // const fetchContentData = async () => {
-  //   const response = await axios.get(`http://localhost:4000/content/${id}`);
-  //   setContentDetail(response.data);
-  // };
+  const fetchContentData = async () => {
+    const response = await axios.get(`http://localhost:4000/content/${id}`);
+    setContentDetail(response.data);
+  };
 
-  // useEffect(() => {
-  //   fetchContentData();
-  // }, [id]);
+  useEffect(() => {
+    fetchContentData();
+  }, [id]);
 
-  // useEffect(() => {
-  //   updateContentViews();
-  // }, [views]);
+  useEffect(() => {
+    updateContentViews();
+  }, [views]);
 
-  // useEffect(() => {
-  //   setViews(true);
-  // }, [id]);
+  useEffect(() => {
+    setViews(true);
+  }, [id]);
 
   // 질문 7-2 처음 코드. 새로 고침하면 조회수가 2씩 늘어남
   // const updateContentViews = async () => {
@@ -58,32 +58,32 @@ function Content() {
   // }, [id]);
 
   // 질문7-3. view를 일반 변수 let으로 선언
-  let views = false;
-  const updateContentViews = async () => {
-    if (views) {
-      await axios.post("http://localhost:4000/content/update_content_process", {
-        id,
-      });
-      views = false;
-    }
-  };
+  // let views = false;
+  // const updateContentViews = async () => {
+  //   if (views) {
+  //     await axios.post("http://localhost:4000/content/update_content_process", {
+  //       id,
+  //     });
+  //     views = false;
+  //   }
+  // };
 
-  const fetchContentData = async () => {
-    const response = await axios.get(`http://localhost:4000/content/${id}`);
-    setContentDetail(response.data);
-  };
+  // const fetchContentData = async () => {
+  //   const response = await axios.get(`http://localhost:4000/content/${id}`);
+  //   setContentDetail(response.data);
+  // };
 
-  useEffect(() => {
-    fetchContentData();
-  }, [id]);
+  // useEffect(() => {
+  //   fetchContentData();
+  // }, [id]);
 
-  useEffect(() => {
-    updateContentViews();
-  }, [views]);
+  // useEffect(() => {
+  //   updateContentViews();
+  // }, [views]);
 
-  useEffect(() => {
-    views = true;
-  }, [id]);
+  // useEffect(() => {
+  //   views = true;
+  // }, [id]);
 
   return (
     <>
