@@ -1,35 +1,31 @@
-import { useState, useEffect } from "react";
-import axios from "axios";
 import { Route, Routes } from "react-router";
 import { BrowserRouter } from "react-router-dom";
 import Content from "./pages/Content";
+import Landing from "./pages/Landing";
+import CreateContent from "./pages/CreateContent";
+import HomeButton from "./components/Button/HomeButton";
+import CreateButton from "./components/Button/CreateButton";
+import UpdateContent from "./pages/UpdateContent";
+import Search from "./pages/Search";
 
 function App() {
-  const [content, setContent] = useState([]);
-
-  const fetchData = async () => {
-    const response = await axios.get("http://localhost:4000");
-    setContent(response.data);
-  };
-
-  useEffect(() => {
-    fetchData();
-  }, []);
+  // const navigate = useNavigate();
 
   return (
-    <div className="App">
-      <h1>let's start to notice board</h1>
-      {/* <div>{content[0].title}</div> */}
-      {content.map((contentData) => {
-        return (
-          <div key={contentData.id} style={{ display: "flex" }}>
-            <div style={{ width: "70px" }}>{contentData.id}</div>
-            <div style={{ width: "300px" }}>title : {contentData.title}</div>
-            <div style={{ width: "300px" }}>author : {contentData.name}</div>
-          </div>
-        );
-      })}
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Landing />} />
+        <Route path="/content/create_content" element={<CreateContent />} />
+        <Route path="/content/update_content/:id" element={<UpdateContent />} />
+        <Route path="/content/:id" element={<Content />} />
+        <Route path="/search/:keyword" element={<Search />} />
+      </Routes>
+
+      <div style={{ margin: "30px 0 0 0", display: "inline-block" }}>
+        <HomeButton />
+        <CreateButton />
+      </div>
+    </BrowserRouter>
   );
 }
 
