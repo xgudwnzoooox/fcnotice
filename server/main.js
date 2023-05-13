@@ -6,11 +6,18 @@ var compression = require("compression");
 var helmet = require("helmet");
 var cors = require("cors");
 var db = require("./lib/db");
-// git
-// second test
-// third test
+const dotenv = require("dotenv");
+const cookieParser = require("cookie-parser");
+dotenv.config();
 
-app.use(cors());
+app.use(cookieParser());
+app.use(
+  cors({
+    origin: "http://localhost:3000",
+    methods: ["GET", "POST"],
+    credentials: true,
+  })
+);
 app.use(helmet());
 app.use(express.static("public"));
 app.use(bodyParser.json());
@@ -19,10 +26,12 @@ app.use(compression());
 app.use("/image", express.static("./uploads"));
 
 var indexRouter = require("./routes/index");
+var loginRouter = require("./routes/login");
 var contentRouter = require("./routes/content");
 var searchRouter = require("./routes/search");
 
 app.use("/", indexRouter);
+app.use("/login", loginRouter);
 app.use("/content", contentRouter);
 app.use("/search", searchRouter);
 

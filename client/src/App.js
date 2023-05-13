@@ -7,6 +7,7 @@ import HomeButton from "./components/Button/HomeButton";
 import CreateButton from "./components/Button/CreateButton";
 import UpdateContent from "./pages/UpdateContent";
 import Search from "./pages/Search";
+import Login from "./pages/Login";
 
 function App() {
   // const navigate = useNavigate();
@@ -15,6 +16,7 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Landing />} />
+        <Route path="/login" element={<Login />} />
         <Route path="/content/create_content" element={<CreateContent />} />
         <Route path="/content/update_content/:id" element={<UpdateContent />} />
         <Route path="/content/:id" element={<Content />} />

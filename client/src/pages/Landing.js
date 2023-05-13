@@ -2,16 +2,21 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import SearchBox from "../components/Button/SearchBox";
 import LandingContentList from "../components/ContentList/LandingContentList";
+import LoginButton from "../components/Button/LoginButton";
+import LogoutButton from "../components/Button/LogoutButton";
+import useFetchLogin from "../hooks/usefetchLogin";
 
 function Landing() {
+  const { isLogin, user, setIsLogin, setUser, fetchLogin } = useFetchLogin();
+
   const [content, setContent] = useState([]);
   const [page, setPage] = useState(1); // 현재 페이지 상태 추가
   const [totalPages, setTotalPages] = useState(1); // 총 페이지 수 상태 추가
-  const [keyword, setKeyword] = useState("");
+  const [keyword, setKeyword] = useState(""); // 검색 키워
 
-  const [limit, setLimit] = useState(10);
-  const [orderBy, setOrderBy] = useState("ASC");
-  const [orderField, setOrderField] = useState("created");
+  const [limit, setLimit] = useState(10); // 게시글 보기 수
+  const [orderBy, setOrderBy] = useState("ASC"); // 00내림차순
+  const [orderField, setOrderField] = useState("created"); // 작성일,수정일, 조회수 등
 
   const [clickDeleteButton, setClickDeleteButton] = useState(false);
 
@@ -25,8 +30,12 @@ function Landing() {
   };
 
   useEffect(() => {
+    fetchLogin();
+  }, []);
+
+  useEffect(() => {
     fetchData();
-  }, [limit, orderBy, orderField, page, keyword, clickDeleteButton]);
+  }, [limit, orderBy, orderField, page, clickDeleteButton, isLogin]);
 
   const updateContent = (id) => {
     setContent((prevContent) => prevContent.filter((item) => item.id !== id));
@@ -67,7 +76,20 @@ function Landing() {
 
   return (
     <div>
-      <h1>Notice Board</h1>
+      <h1 style={{ margin: "30px 390px 0px 0", display: "inline-block" }}>
+        Notice Board
+      </h1>
+      {isLogin ? (
+        <>
+          <div
+            style={{ margin: "0px 20px 0px 0", display: "inline-block" }}
+          >{`${user} 님`}</div>
+          <LogoutButton setIsLogin={setIsLogin} setUser={setUser} />
+        </>
+      ) : (
+        <LoginButton />
+      )}
+      <p />
       <div style={{ margin: "0 50px 35px 0", display: "inline-block" }}>
         <SearchBox
           handleKeywordChange={handleKeywordChange}
