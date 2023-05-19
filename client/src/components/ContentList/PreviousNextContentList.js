@@ -2,6 +2,7 @@ import React from "react";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import ContentList from "./ContentList";
+import "./PreviousNextContentList.css"; // CSS 파일을 import 해주세요.
 
 export default function PreviousNextContentList(props) {
   const [previousNextContent, setPreviousNextContent] = useState([]);
@@ -31,10 +32,10 @@ export default function PreviousNextContentList(props) {
   }, [id]);
 
   return (
-    <div style={{ margin: "50px 100px 30px 0px" }}>
+    <div className="previous-next-container">
       {previousNextContent.map((contentData, index) => {
         return (
-          <div style={{ marginBottom: "10px" }}>
+          <div key={index} className="previous-next-item">
             <ContentList contentData={contentData} />
           </div>
         );

@@ -13,7 +13,7 @@ function SearchBox(props) {
         autoFocus
         onChange={handleKeywordChange}
         value={keyword}
-        style={{ width: "400px", marginRight: "5px" }}
+        style={{ width: "400px", margin: "40px 5px 0 0" }}
       />
       <input type="submit" value="검색" />
       <p />

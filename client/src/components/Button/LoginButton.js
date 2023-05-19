@@ -1,5 +1,7 @@
+/* LoginButton.js */
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import "./LoginButton.css";
 
 export default function LoginButton(props) {
   const navigate = useNavigate();
@@ -9,10 +11,7 @@ export default function LoginButton(props) {
     navigate(`/login`, { state: { setIsLogin: setIsLogin } });
   };
   return (
-    <div
-      onClick={onClickHandler}
-      style={{ display: "inline-block", cursor: "pointer" }}
-    >
+    <div onClick={onClickHandler} className="login-button">
       로그인
     </div>
   );

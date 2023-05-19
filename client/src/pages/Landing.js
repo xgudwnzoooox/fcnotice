@@ -4,35 +4,28 @@ import SearchBox from "../components/Button/SearchBox";
 import LandingContentList from "../components/ContentList/LandingContentList";
 import useFetchLogin from "../hooks/usefetchLogin";
 import CreateButton from "../components/Button/CreateButton";
+import "./Landing.css";
 
 function Landing() {
   const { isLogin } = useFetchLogin();
 
   const [content, setContent] = useState([]);
-  const [page, setPage] = useState(1); // 현재 페이지 상태 추가
-  const [totalPages, setTotalPages] = useState(1); // 총 페이지 수 상태 추가
-  const [keyword, setKeyword] = useState(""); // 검색 키워
-
-  const [limit, setLimit] = useState(10); // 게시글 보기 수
-  const [orderBy, setOrderBy] = useState("ASC"); // 00내림차순
-  const [orderField, setOrderField] = useState("created"); // 작성일,수정일, 조회수 등
-
+  const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const [keyword, setKeyword] = useState("");
+  const [limit, setLimit] = useState(10);
+  const [orderBy, setOrderBy] = useState("ASC");
+  const [orderField, setOrderField] = useState("created");
   const [clickDeleteButton, setClickDeleteButton] = useState(false);
 
   const fetchData = async () => {
     const response = await axios.get(
-      `http://localhost:4000?limit=${limit}&orderBy=${orderBy}&orderField=${orderField}&page=${page}&keyword=${keyword}` // 페이지 추가
+      `http://localhost:4000?limit=${limit}&orderBy=${orderBy}&orderField=${orderField}&page=${page}&keyword=${keyword}`
     );
-    setClickDeleteButton(false); // delete 버튼 클릭 시, 바로 랜더링 일어나도록
+    setClickDeleteButton(false);
     setContent(response.data.content);
-    setTotalPages(response.data.totalPages); // 총 페이지 수 설정
+    setTotalPages(response.data.totalPages);
   };
-
-  // useEffect(() => {
-  //   fetchLogin();
-  // }, []);
-
-  // useInterval(isLogin);
 
   useEffect(() => {
     fetchData();
@@ -43,7 +36,7 @@ function Landing() {
   };
 
   const handleLimitChange = (event) => {
-    setPage(1); // 페이지를 첫 페이지로 변경
+    setPage(1);
     setLimit(parseInt(event.target.value));
   };
 
@@ -76,25 +69,28 @@ function Landing() {
   };
 
   return (
-    <div>
-      <p />
-      <div style={{ margin: "0 50px 35px 0", display: "inline-block" }}>
+    <div className="landing-container">
+      <div className="search-container">
         <SearchBox
           handleKeywordChange={handleKeywordChange}
           onSubmitHandler={onSubmitHandler}
           keyword={keyword}
         />
       </div>
-      <div style={{ margin: "0 0 35px 0", display: "inline-block" }}>
+      <div className="filter-container">
         <select
           value={limit}
           onChange={handleLimitChange}
-          style={{ margin: "0 20px 0 0" }}
+          className="filter-select"
         >
           <option value={10}>10개 보기</option>
           <option value={20}>20개 보기</option>
         </select>
-        <select value={`${orderBy} ${orderField}`} onChange={handleOrderChange}>
+        <select
+          value={`${orderBy} ${orderField}`}
+          onChange={handleOrderChange}
+          className="filter-select"
+        >
           <option value="DESC created">작성일 내림차순</option>
           <option value="ASC created">작성일 오름차순</option>
           <option value="DESC updatedDate">수정일 내림차순</option>
@@ -104,16 +100,12 @@ function Landing() {
         </select>
       </div>
       <LandingContentList content={content} />
-      <div style={{ display: "inline-block", margin: "30px 220px 0 350px" }}>
+      <div className="pagination-container">
         {pageNumbers.map((number) => (
           <div
             key={number}
             onClick={(event) => handlePageChange(event, number)}
-            style={{
-              display: "inline-block",
-              margin: "0 30px 0 0",
-              cursor: "pointer",
-            }}
+            className="page-number"
           >
             {number}
           </div>

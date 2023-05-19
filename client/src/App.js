@@ -10,14 +10,17 @@ import TopRightBar from "./components/Bar/TopRightBar";
 import MyContent from "./pages/MyPage/MyContent";
 import MyTrash from "./pages/MyPage/MyTrash";
 import MyInfo from "./pages/MyPage/MyInfo";
+import "./App.css";
 
 function App() {
   // const navigate = useNavigate();
 
   return (
     <BrowserRouter>
-      <HomeButton />
-      <TopRightBar />
+      <div className="top-bar">
+        <HomeButton />
+        <TopRightBar />
+      </div>
       <Routes>
         <Route path="/" element={<Landing />} />
         <Route path="/login" element={<Login />} />

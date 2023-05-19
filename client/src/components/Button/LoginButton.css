@@ -1,0 +1,10 @@
+.login-button {
+  display: inline-block;
+  cursor: pointer;
+  font-weight: bold;
+  transition: color 0.3s ease-in-out;
+}
+
+.login-button:hover {
+  color: #4d8fdb;
+}

@@ -3,28 +3,26 @@ import { useNavigate } from "react-router-dom";
 import useKoreanTimeSimple from "../../hooks/useKoreanTimeSimple";
 import UpdateButton from "../Button/UpdateButton";
 import DeleteButton from "../Button/DeleteButton";
+import "./LandingContentList.css";
 
 export default function LandingContentList(props) {
   const { content, updateContent, setClickDeleteButton } = props;
   const { changeToKstDateSimple } = useKoreanTimeSimple();
-  // const { checkAccess } = useCheckAccess();
   const navigate = useNavigate();
 
   const onClickList = (link) => {
-    // 로그인 사용자만 게시글 상세보기 가능
-    // checkAccess();
     navigate(link);
   };
 
   return (
-    <table>
+    <table className="content-list-table">
       <thead>
-        <tr style={{ textAlign: "left" }}>
-          <th style={{ width: "250px" }}>제목</th>
-          <th style={{ width: "120px" }}>작성자</th>
-          <th style={{ width: "160px" }}>작성일</th>
-          <th style={{ width: "150px" }}>수정일</th>
-          <th style={{ width: "80px" }}>조회수</th>
+        <tr>
+          <th>제목</th>
+          <th>작성자</th>
+          <th>작성일</th>
+          <th>수정일</th>
+          <th>조회수</th>
         </tr>
       </thead>
       <tbody>
@@ -32,7 +30,7 @@ export default function LandingContentList(props) {
           <tr
             key={contentData.id}
             onClick={() => onClickList(`/content/${contentData.id}`)}
-            style={{ cursor: "pointer" }}
+            className="content-list-row"
           >
             <td>{contentData.title.slice(0, 20)}...</td>
             <td>{contentData.name}</td>

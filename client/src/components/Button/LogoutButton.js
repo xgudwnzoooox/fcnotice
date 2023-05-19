@@ -1,7 +1,9 @@
+/* LogoutButton.js */
 import axios from "axios";
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { intervalId } from "../../hooks/useInterval";
+import "./LogoutButton.css";
 
 export default function LogoutButton(props) {
   const navigate = useNavigate();
@@ -24,10 +26,7 @@ export default function LogoutButton(props) {
   };
 
   return (
-    <div
-      onClick={onClickLogoutHandler}
-      style={{ display: "inline-block", cursor: "pointer" }}
-    >
+    <div onClick={onClickLogoutHandler} className="logout-button">
       로그아웃
     </div>
   );

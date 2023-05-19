@@ -1,27 +1,11 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import "./CreateButton.css";
 
 export default function CreateButton() {
   return (
-    <>
-      <Link
-        to={"/content/create_content"}
-        style={{
-          textDecoration: "none",
-          color: "black",
-        }}
-      >
-        <div
-          style={{
-            backgroundColor: "Black",
-            color: "white",
-            display: "inline",
-            margin: "20px 20px 0px 0px",
-          }}
-        >
-          CREATE
-        </div>
-      </Link>
-    </>
+    <Link to="/content/create_content" className="create-button-link">
+      <div className="create-button">CREATE</div>
+    </Link>
   );
 }

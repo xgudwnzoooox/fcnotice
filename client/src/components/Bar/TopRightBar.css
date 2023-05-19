@@ -1,0 +1,14 @@
+.top-right-bar {
+  position: fixed;
+  top: 0;
+  right: 0;
+  margin-top: 10px;
+  margin-right: 20px;
+}
+
+.user-name {
+  margin-right: 20px;
+  display: inline-block;
+  cursor: pointer;
+  font-weight: bold;
+}
