@@ -4,28 +4,30 @@ import Content from "./pages/Content";
 import Landing from "./pages/Landing";
 import CreateContent from "./pages/CreateContent";
 import HomeButton from "./components/Button/HomeButton";
-import CreateButton from "./components/Button/CreateButton";
 import UpdateContent from "./pages/UpdateContent";
-import Search from "./pages/Search";
 import Login from "./pages/Login";
+import TopRightBar from "./components/Bar/TopRightBar";
+import MyContent from "./pages/MyPage/MyContent";
+import MyTrash from "./pages/MyPage/MyTrash";
+import MyInfo from "./pages/MyPage/MyInfo";
 
 function App() {
   // const navigate = useNavigate();
 
   return (
     <BrowserRouter>
+      <HomeButton />
+      <TopRightBar />
       <Routes>
         <Route path="/" element={<Landing />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/mypage/content" element={<MyContent />} />
+        <Route path="/mypage/myinfo" element={<MyInfo />} />
+        <Route path="/mypage/trash" element={<MyTrash />} />
         <Route path="/content/create_content" element={<CreateContent />} />
         <Route path="/content/update_content/:id" element={<UpdateContent />} />
         <Route path="/content/:id" element={<Content />} />
       </Routes>
-
-      <div style={{ margin: "30px 0 0 0", display: "inline-block" }}>
-        <HomeButton />
-        <CreateButton />
-      </div>
     </BrowserRouter>
   );
 }

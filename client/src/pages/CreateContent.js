@@ -1,13 +1,18 @@
 import axios from "axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import BackButton from "../components/Button/BackButton";
+import useCheckAccess from "../hooks/useCheckAccess";
 
 function CreateContent() {
   const navigate = useNavigate();
   const [image, setImage] = useState(null);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
+  const { checkAccess } = useCheckAccess();
+  useEffect(() => {
+    checkAccess();
+  }, []);
 
   const onSubmitHandler = async (e) => {
     e.preventDefault();
@@ -48,7 +53,6 @@ function CreateContent() {
 
   return (
     <>
-      <BackButton />
       <form onSubmit={onSubmitHandler}>
         <p />
         <input
@@ -80,6 +84,7 @@ function CreateContent() {
           style={{ marginBottom: "20px" }}
         ></input>
       </form>
+      <BackButton />
     </>
   );
 }

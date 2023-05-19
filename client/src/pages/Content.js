@@ -7,15 +7,21 @@ import useKoreanTime from "../hooks/useKoreanTime";
 import PreviousNextContentList from "../components/ContentList/PreviousNextContentList";
 import { useInterval } from "../hooks/useInterval";
 import useFetchLogin from "../hooks/usefetchLogin";
+import useCheckAccess from "../hooks/useCheckAccess";
 
 function Content() {
   const { id } = useParams();
   const { changeToKstDate } = useKoreanTime();
   const [contentDetail, setContentDetail] = useState([]);
   const { isLogin } = useFetchLogin();
+  const { checkAccess } = useCheckAccess();
+  useEffect(() => {
+    checkAccess();
+  }, []);
 
   // 질문7-1
   const [views, setViews] = useState(false);
+
   const updateContentViews = async () => {
     if (views) {
       await axios.post("http://localhost:4000/content/update_content_process", {
@@ -31,7 +37,6 @@ function Content() {
   };
 
   // refresh accessToken by refreshToken
-  console.log("islogin:" + isLogin);
   useInterval(isLogin, id);
 
   useEffect(() => {
@@ -94,7 +99,6 @@ function Content() {
 
   return (
     <>
-      <BackButton />
       {contentDetail.map((contentData) => {
         return (
           <>
@@ -146,6 +150,7 @@ function Content() {
       <p />
       <PreviousNextContentList id={id} />
       <UpdateButton id={id} />
+      <BackButton />
     </>
   );
 }

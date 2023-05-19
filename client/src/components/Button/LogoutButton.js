@@ -17,7 +17,7 @@ export default function LogoutButton(props) {
         withCredentials: true,
       }
     );
-    // document.cookie = "accessToken=";
+
     setIsLogin(false);
     setUser("");
     navigate(`/`);

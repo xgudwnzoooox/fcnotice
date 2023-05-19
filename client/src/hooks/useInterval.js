@@ -1,11 +1,12 @@
 import { useEffect } from "react";
 import useFetchLogin from "./usefetchLogin";
+import axios from "axios";
 
 export let intervalId;
 
 export const useInterval = () => {
   // export const useInterval = (isLogin, id) => {
-  const { isLogin, user, setIsLogin, setUser, fetchLogin } = useFetchLogin();
+  const { isLogin, fetchLogin } = useFetchLogin();
 
   useEffect(() => {
     fetchLogin();
@@ -13,10 +14,14 @@ export const useInterval = () => {
 
   useEffect(() => {
     const startInterval = () => {
-      intervalId = setInterval(() => {
+      intervalId = setInterval(async () => {
         // 실행할 코드 작성
+        const response = await axios.get(
+          `http://localhost:4000/login/refreshToken`,
+          { withCredentials: true } // 로그인 정보 확인
+        );
         console.log("Interval is running");
-      }, 500); // 0.5초마다 실행되도록 설정 (원하는 간격으로 변경 가능)
+      }, 100000000); // 0.5초마다 실행되도록 설정 (원하는 간격으로 변경 가능)
     };
 
     const stopInterval = () => {

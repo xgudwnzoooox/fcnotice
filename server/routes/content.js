@@ -6,7 +6,8 @@ var fs = require("fs");
 var sanitizeHtml = require("sanitize-html");
 var db = require("../lib/db");
 const multer = require("multer");
-//private
+const jwt = require("jsonwebtoken");
+const cookieParser = require("cookie-parser");
 
 const upload = multer({ dest: "./uploads" });
 // 아래 코드는 main.js 에 위치해야한다.
@@ -81,6 +82,25 @@ router.post("/delete_content_process", function (request, response) {
   );
 });
 
+// cancel trash
+router.post("/cancel_trash", function (request, response) {
+  var post = request.body;
+  var id = post.id;
+
+  db.query(
+    `UPDATE mongTable SET deleted = 0, deletedDate = NULL WHERE id = ?`,
+    // DB에서도 삭제
+    // `DELETE FROM mongTable WHERE id = ?`,
+    [id],
+    function (err, topic, fields) {
+      if (err) throw err;
+      response.json(id);
+      // 질문 3
+      // response.redirect(`http://localhost:3000/user`);
+    }
+  );
+});
+
 // show previous contentList
 router.get("/prev/:pageId", function (request, response, next) {
   let id = request.params.pageId;
@@ -111,6 +131,50 @@ router.get("/next/:pageId", function (request, response, next) {
       }
     );
   });
+});
+
+// trash contentList
+router.get("/trash", function (request, res, next) {
+  const limit = parseInt(request.query.limit) || 10; // 쿼리 파라미터로 보여줄 개수 받기
+  const orderBy = request.query.orderBy || "ASC"; // 쿼리 파라미터로 정렬 순서 받기
+  const orderField = request.query.orderField || "created"; // 쿼리 파라미터로 정렬할 필드 받기
+  const page = parseInt(request.query.page) || 1; // 쿼리 파라미터로 페이지 번호 받기
+
+  const token = request.cookies.accessToken;
+  let data = "";
+  let token_name = "";
+  if (token) {
+    data = jwt.verify(token, process.env.ACCESS_SECRET);
+    token_name = data.name;
+  }
+
+  db.query(
+    "SELECT COUNT(*) AS total FROM mongTable WHERE deleted = 1",
+    function (err, result) {
+      if (err) throw err;
+      const total = result[0].total;
+      const totalPages = Math.ceil(total / limit);
+      const offset = (page - 1) * limit;
+      let query = `SELECT mongTable.id, title, name, created, updatedDate, views_Num, deletedDate
+    FROM mongTable
+    LEFT JOIN author ON mongTable.author_id = author.id
+    WHERE deleted = 1`;
+
+      if (token_name) {
+        // name 값이 있는 경우 해당 name으로 필터링
+        query += ` AND name ='${token_name}'`;
+      }
+
+      query += ` ORDER BY ${orderField} ${orderBy}
+    LIMIT ${limit}
+    OFFSET ${offset}`;
+
+      db.query(query, function (err2, results) {
+        if (err2) throw err2;
+        res.json({ content: results, totalPages }); // JSON으로 content와 totalPages 반환
+      });
+    }
+  );
 });
 
 // show content detail

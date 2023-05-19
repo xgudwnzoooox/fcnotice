@@ -18,7 +18,7 @@ function UpdateContent() {
     setTitle(response.data[0].title);
     setDescription(response.data[0].description);
     // 질문5
-    console.log(image, title, description);
+    // console.log(image, title, description);
     // 질문6
   };
 

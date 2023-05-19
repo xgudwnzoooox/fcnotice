@@ -2,18 +2,17 @@ import React from "react";
 import axios from "axios";
 import { useNavigate } from "react-router";
 
-export default function DeleteButton(props) {
-  const { updateContent, setClickDeleteButton } = props;
+export default function CancelDeleteButton(props) {
   const navigate = useNavigate();
+  const { setClickCancelDeleteButton } = props;
 
   const onClickHandler = async (e) => {
-    // e.preventDefault();
     const id = props.id;
-    await axios.post(`http://localhost:4000/content/delete_content_process`, {
+    await axios.post(`http://localhost:4000/content/cancel_trash`, {
       id,
     });
-    setClickDeleteButton(true);
-    navigate(`/mypage/content`);
+    setClickCancelDeleteButton(true);
+    navigate(`/mypage/trash`);
   };
   return (
     <>
@@ -25,7 +24,7 @@ export default function DeleteButton(props) {
           cursor: "pointer",
         }}
       >
-        삭제
+        복원
       </div>
     </>
   );

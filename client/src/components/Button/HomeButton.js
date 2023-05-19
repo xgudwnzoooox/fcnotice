@@ -5,16 +5,16 @@ export default function HomeButton() {
   return (
     <>
       <Link to={"/"} style={{ textDecoration: "none", color: "black" }}>
-        <div
+        <h1
           style={{
-            backgroundColor: "Black",
+            backgroundColor: "lightBlue",
             color: "white",
-            display: "inline",
-            margin: "20px 20px 0px 0px",
+            display: "inline-block",
+            margin: "30px 390px 0px 0px",
           }}
         >
-          HOME
-        </div>
+          Notice Board
+        </h1>
       </Link>
     </>
   );

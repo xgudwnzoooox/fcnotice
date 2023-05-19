@@ -7,6 +7,8 @@ var db = require("../lib/db");
 const jwt = require("jsonwebtoken");
 const cookieParser = require("cookie-parser");
 
+const expireTime = "2h";
+
 // 로그인 및 access, refresh 토근 생성
 router.post("/", function (request, response, next) {
   const post = request.body;
@@ -29,7 +31,7 @@ router.post("/", function (request, response, next) {
           },
           process.env.ACCESS_SECRET,
           {
-            expiresIn: "60m", //개발용
+            expiresIn: expireTime, //개발용
             issuer: "mong",
           }
         );
@@ -86,6 +88,49 @@ router.get("/success", function (request, response, next) {
       }
     );
   } else {
+    response.json("noToken");
+  }
+});
+
+// refresh accessToken using refreshToken
+router.get("/refreshToken", function (request, response, next) {
+  const token = request.cookies.refreshToken;
+
+  // 로그아웃시 jwt empty 에러 해결을 위해 if문 추가
+  if (token) {
+    const data = jwt.verify(token, process.env.REFRECH_SECRET);
+    const token_name = data.name;
+    db.query(
+      `SELECT name FROM author WHERE name = ?`,
+      [token_name],
+      function (err2, topic, fields) {
+        if (err2) throw err2;
+        if (!topic) {
+          response.status(403).json("Not Authorized");
+        } else {
+          // access Token 발급
+          const accessToken = jwt.sign(
+            {
+              id: topic[0].id,
+              name: topic[0].name,
+              email: topic[0].email,
+            },
+            process.env.ACCESS_SECRET,
+            {
+              expiresIn: expireTime, //개발용
+              issuer: "mong",
+            }
+          );
+          console.log(accessToken);
+          response.cookie("accessToken", accessToken, {
+            secure: false,
+            httpOnly: true,
+          });
+          response.status(200).json("Access Token Recreated");
+        }
+      }
+    );
+  } else {
     response.json("logout");
   }
 });
@@ -94,6 +139,19 @@ router.get("/success", function (request, response, next) {
 router.post("/logout", function (request, response, next) {
   response.cookie("accessToken", "");
   response.json("Logout Success");
+});
+
+// myInfo
+router.get("/myinfo", function (request, response, next) {
+  const token = request.cookies.accessToken;
+
+  // 로그아웃시 jwt empty 에러 해결을 위해 if문 추가
+  if (token) {
+    const data = jwt.verify(token, process.env.ACCESS_SECRET);
+    response.json(data);
+  } else {
+    response.json("noToken");
+  }
 });
 
 module.exports = router;

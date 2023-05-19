@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import SearchBox from "../components/Button/SearchBox";
-import ContentList from "../components/ContentList/LandingContentList";
+import LandingContentList from "../components/ContentList/LandingContentList";
 import { useParams } from "react-router-dom";
 
 function Search() {
@@ -26,7 +26,7 @@ function Search() {
     <div>
       <h1>Notice Board</h1>
       <SearchBox />
-      <ContentList content={content} />
+      <LandingContentList content={content} />
     </div>
   );
 }

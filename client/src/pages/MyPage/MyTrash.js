@@ -1,42 +1,36 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import SearchBox from "../components/Button/SearchBox";
-import LandingContentList from "../components/ContentList/LandingContentList";
-import useFetchLogin from "../hooks/usefetchLogin";
-import CreateButton from "../components/Button/CreateButton";
+import MyContentList from "../../components/ContentList/MyContentList";
+import useFetchLogin from "../../hooks/usefetchLogin";
+import MyPageBar from "../../components/Bar/MyPageBar";
+import MyTrashContentList from "../../components/ContentList/MyTrashContentList";
 
-function Landing() {
+function MyTrash() {
   const { isLogin } = useFetchLogin();
 
   const [content, setContent] = useState([]);
   const [page, setPage] = useState(1); // 현재 페이지 상태 추가
   const [totalPages, setTotalPages] = useState(1); // 총 페이지 수 상태 추가
-  const [keyword, setKeyword] = useState(""); // 검색 키워
 
   const [limit, setLimit] = useState(10); // 게시글 보기 수
   const [orderBy, setOrderBy] = useState("ASC"); // 00내림차순
   const [orderField, setOrderField] = useState("created"); // 작성일,수정일, 조회수 등
 
-  const [clickDeleteButton, setClickDeleteButton] = useState(false);
+  const [clickCancelDeleteButton, setClickCancelDeleteButton] = useState(false);
 
   const fetchData = async () => {
     const response = await axios.get(
-      `http://localhost:4000?limit=${limit}&orderBy=${orderBy}&orderField=${orderField}&page=${page}&keyword=${keyword}` // 페이지 추가
+      `http://localhost:4000/content/trash?limit=${limit}&orderBy=${orderBy}&orderField=${orderField}&page=${page}`,
+      { withCredentials: true }
     );
-    setClickDeleteButton(false); // delete 버튼 클릭 시, 바로 랜더링 일어나도록
+    setClickCancelDeleteButton(false); // canceldelete 버튼 클릭 시, 바로 랜더링 일어나도록
     setContent(response.data.content);
     setTotalPages(response.data.totalPages); // 총 페이지 수 설정
   };
 
-  // useEffect(() => {
-  //   fetchLogin();
-  // }, []);
-
-  // useInterval(isLogin);
-
   useEffect(() => {
     fetchData();
-  }, [limit, orderBy, orderField, page, clickDeleteButton, isLogin]);
+  }, [limit, orderBy, orderField, page, clickCancelDeleteButton, isLogin]);
 
   const updateContent = (id) => {
     setContent((prevContent) => prevContent.filter((item) => item.id !== id));
@@ -64,27 +58,10 @@ function Landing() {
     pageNumbers.push(i);
   }
 
-  const handleKeywordChange = (event) => {
-    setKeyword(event.target.value);
-  };
-
-  const onSubmitHandler = async (e) => {
-    setPage(1);
-    e.preventDefault();
-    fetchData();
-    setKeyword("");
-  };
-
   return (
     <div>
+      <MyPageBar />
       <p />
-      <div style={{ margin: "0 50px 35px 0", display: "inline-block" }}>
-        <SearchBox
-          handleKeywordChange={handleKeywordChange}
-          onSubmitHandler={onSubmitHandler}
-          keyword={keyword}
-        />
-      </div>
       <div style={{ margin: "0 0 35px 0", display: "inline-block" }}>
         <select
           value={limit}
@@ -103,8 +80,12 @@ function Landing() {
           <option value="ASC views_Num">조회수 오름차순</option>
         </select>
       </div>
-      <LandingContentList content={content} />
-      <div style={{ display: "inline-block", margin: "30px 220px 0 350px" }}>
+      <MyTrashContentList
+        content={content}
+        updateContent={updateContent}
+        setClickCancelDeleteButton={setClickCancelDeleteButton}
+      />
+      <div style={{ display: "inline-block", margin: "30px 240px 0 450px" }}>
         {pageNumbers.map((number) => (
           <div
             key={number}
@@ -119,9 +100,8 @@ function Landing() {
           </div>
         ))}
       </div>
-      <CreateButton />
     </div>
   );
 }
 
-export default Landing;
+export default MyTrash;
