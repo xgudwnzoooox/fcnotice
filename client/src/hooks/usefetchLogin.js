@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import { useState } from "react";
 
 export default function useFetchLogin() {
   const [isLogin, setIsLogin] = useState(false); // 로그인 유무

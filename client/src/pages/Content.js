@@ -5,11 +5,14 @@ import BackButton from "../components/Button/BackButton";
 import UpdateButton from "../components/Button/UpdateButton";
 import useKoreanTime from "../hooks/useKoreanTime";
 import PreviousNextContentList from "../components/ContentList/PreviousNextContentList";
+import { useInterval } from "../hooks/useInterval";
+import useFetchLogin from "../hooks/usefetchLogin";
 
 function Content() {
   const { id } = useParams();
   const { changeToKstDate } = useKoreanTime();
   const [contentDetail, setContentDetail] = useState([]);
+  const { isLogin } = useFetchLogin();
 
   // 질문7-1
   const [views, setViews] = useState(false);
@@ -26,6 +29,10 @@ function Content() {
     const response = await axios.get(`http://localhost:4000/content/${id}`);
     setContentDetail(response.data);
   };
+
+  // refresh accessToken by refreshToken
+  console.log("islogin:" + isLogin);
+  useInterval(isLogin, id);
 
   useEffect(() => {
     fetchContentData();

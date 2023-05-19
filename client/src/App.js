@@ -20,7 +20,6 @@ function App() {
         <Route path="/content/create_content" element={<CreateContent />} />
         <Route path="/content/update_content/:id" element={<UpdateContent />} />
         <Route path="/content/:id" element={<Content />} />
-        <Route path="/search/:keyword" element={<Search />} />
       </Routes>
 
       <div style={{ margin: "30px 0 0 0", display: "inline-block" }}>

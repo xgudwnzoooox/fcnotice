@@ -5,6 +5,7 @@ import LandingContentList from "../components/ContentList/LandingContentList";
 import LoginButton from "../components/Button/LoginButton";
 import LogoutButton from "../components/Button/LogoutButton";
 import useFetchLogin from "../hooks/usefetchLogin";
+import { useInterval } from "../hooks/useInterval";
 
 function Landing() {
   const { isLogin, user, setIsLogin, setUser, fetchLogin } = useFetchLogin();
@@ -32,6 +33,8 @@ function Landing() {
   useEffect(() => {
     fetchLogin();
   }, []);
+
+  useInterval(isLogin);
 
   useEffect(() => {
     fetchData();

@@ -5,14 +5,14 @@ import useFetchLogin from "../hooks/usefetchLogin";
 
 export default function Login() {
   const navigate = useNavigate();
-  const { isLogin, user, setIsLogin, setUser, fetchLogin } = useFetchLogin();
+  const { setIsLogin } = useFetchLogin();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const onSubmitHandler = async (e) => {
     e.preventDefault();
-    const response = await axios.post(
+    await axios.post(
       `http://localhost:4000/login`,
       { email, password },
       { withCredentials: true } // 로그인 정보 확인
