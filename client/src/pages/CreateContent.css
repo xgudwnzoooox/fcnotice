@@ -1,0 +1,57 @@
+/* CreateContent.css */
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.input-field {
+  width: 500px;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  text-align: center; /* 플레이스홀더 텍스트 중앙 정렬 */
+}
+
+textarea {
+  width: 500px;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+textarea::placeholder {
+  text-align: center; /* 플레이스홀더 텍스트 중앙 정렬 */
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.title-input {
+  height: 50px; /* 게시글 제목 입력란의 높이 */
+}
+
+.description-input {
+  height: 100px; /* 게시글 내용 입력란의 높이 */
+}
+
+.file-input {
+  height: 35px; /* 파일 첨부란의 높이 */
+}
+
+.submit-button {
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.submit-button:hover {
+  background-color: #45a049;
+}
+
+/* 추가적인 스타일링을 원하시면 여기에 추가하십시오 */

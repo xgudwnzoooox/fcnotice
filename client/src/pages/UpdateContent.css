@@ -1,0 +1,40 @@
+/* UpdateContent.css */
+
+.update-form {
+  margin: 100px 0 0 0;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.input-field {
+  width: 700px;
+  height: 50px;
+  padding: 6px 12px;
+  font-size: 14px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+}
+
+.description-input {
+  height: 250px;
+}
+
+.file-label {
+  display: inline-block;
+  background-color: gray;
+  color: #fff;
+  padding: 4px 8px;
+  border-radius: 2px;
+  cursor: pointer;
+  margin: 0 10px 0 0;
+}
+
+.image-name {
+  display: inline-block;
+}
+
+.submit-button {
+  margin-bottom: 20px;
+}
