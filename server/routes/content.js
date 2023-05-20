@@ -20,11 +20,19 @@ router.post(
   // single의 인자값은 image input의 name 값
   upload.single("image"),
   function (request, response) {
+    const token = request.cookies.accessToken;
+    let data = "";
+    let token_name = "";
+    let author_id = 0;
+    if (token) {
+      data = jwt.verify(token, process.env.ACCESS_SECRET);
+      author_id = data.id;
+    }
     const post = request.body;
     const title = post.title;
     const image = request.file ? "/image/" + request.file.filename : null;
     const description = post.description;
-    const author_id = post.author_id;
+    // const author_id = post.author_id;
     db.query(
       `INSERT INTO mongTable (title, image, description, created, author_id, deleted) VALUES(?,?,?,NOW(),?,0)`,
       [title, image, description, author_id],

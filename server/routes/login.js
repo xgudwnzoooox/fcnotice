@@ -84,7 +84,8 @@ router.get("/success", function (request, response, next) {
       [token_name],
       function (err2, topic, fields) {
         if (err2) throw err2;
-        response.json(topic);
+        response.json(data);
+        // response.json(topic);
       }
     );
   } else {
