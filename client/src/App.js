@@ -12,25 +12,33 @@ import MyTrash from "./pages/MyPage/MyTrash";
 import MyInfo from "./pages/MyPage/MyInfo";
 import "./App.css";
 
-function App() {
-  // const navigate = useNavigate();
+// redux
+import { Provider } from "react-redux";
+import store from "./store";
 
+function App() {
   return (
     <BrowserRouter>
-      <div className="top-bar">
-        <HomeButton />
-        <TopRightBar />
-      </div>
-      <Routes>
-        <Route path="/" element={<Landing />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/mypage/content" element={<MyContent />} />
-        <Route path="/mypage/myinfo" element={<MyInfo />} />
-        <Route path="/mypage/trash" element={<MyTrash />} />
-        <Route path="/content/create_content" element={<CreateContent />} />
-        <Route path="/content/update_content/:id" element={<UpdateContent />} />
-        <Route path="/content/:id" element={<Content />} />
-      </Routes>
+      {/* redux provider */}
+      <Provider store={store}>
+        <div className="top-bar">
+          <HomeButton />
+          <TopRightBar />
+        </div>
+        <Routes>
+          <Route path="/" element={<Landing />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/mypage/content" element={<MyContent />} />
+          <Route path="/mypage/myinfo" element={<MyInfo />} />
+          <Route path="/mypage/trash" element={<MyTrash />} />
+          <Route path="/content/create_content" element={<CreateContent />} />
+          <Route
+            path="/content/update_content/:id"
+            element={<UpdateContent />}
+          />
+          <Route path="/content/:id" element={<Content />} />
+        </Routes>
+      </Provider>
     </BrowserRouter>
   );
 }

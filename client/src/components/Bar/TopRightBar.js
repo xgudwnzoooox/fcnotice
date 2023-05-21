@@ -7,9 +7,18 @@ import LoginButton from "../Button/LoginButton";
 import { useNavigate } from "react-router-dom";
 import "./TopRightBar.css";
 
+//redux
+import { useDispatch, useSelector } from "react-redux";
+import { up } from "../../reducers/counterSlice";
+
 export default function TopRightBar() {
   const { isLogin, user, setIsLogin, setUser, fetchLogin } = useFetchLogin();
   const navigate = useNavigate();
+  //redux
+  const count = useSelector((state) => {
+    return state.counter.value;
+  });
+  const dispatch = useDispatch();
 
   useEffect(() => {
     fetchLogin();
@@ -23,6 +32,13 @@ export default function TopRightBar() {
 
   return (
     <div className="top-right-bar">
+      {/* redux */}
+      <span
+        onClick={() => {
+          dispatch(up(2));
+        }}
+      >{`redux : ${count} ---`}</span>
+
       {isLogin ? (
         <>
           <div

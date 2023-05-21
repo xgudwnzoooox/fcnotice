@@ -122,7 +122,6 @@ router.get("/refreshToken", function (request, response, next) {
               issuer: "mong",
             }
           );
-          console.log(accessToken);
           response.cookie("accessToken", accessToken, {
             secure: false,
             httpOnly: true,
