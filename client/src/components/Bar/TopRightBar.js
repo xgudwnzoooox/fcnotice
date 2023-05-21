@@ -19,10 +19,12 @@ export default function TopRightBar() {
     return state.counter.value;
   });
   const dispatch = useDispatch();
+  //
 
   useEffect(() => {
     fetchLogin();
-  }, [isLogin, user]);
+  }, [isLogin, count]);
+  // }, [isLogin, user]);
 
   useInterval(isLogin);
 
@@ -44,7 +46,9 @@ export default function TopRightBar() {
           <div
             onClick={() => onClickHandler()}
             className="user-name"
-          >{`${user} 님`}</div>
+            // redux
+          >{`${count} 님`}</div>
+          {/* >{`${user} 님`}</div> */}
           <LogoutButton setIsLogin={setIsLogin} setUser={setUser} />
         </>
       ) : (

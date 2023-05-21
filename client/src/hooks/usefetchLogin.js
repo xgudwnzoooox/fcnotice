@@ -8,7 +8,7 @@ import { up } from "../reducers/counterSlice";
 export default function useFetchLogin() {
   //개발용
   const [isLogin, setIsLogin] = useState(true); // 로그인 유무
-  const [user, setUser] = useState({}); // 유저정보
+  // const [user, setUser] = useState({}); // 유저정보
   const [userId, setUserId] = useState(0); // 유저정보
 
   // redux
@@ -22,18 +22,22 @@ export default function useFetchLogin() {
 
     //redux
     // dispatch(up(5));
-    dispatch(up(5));
 
     // jwt empty 의 경우, 서버에서 반환하는 response.data는 'logout' 문자열로 지정
     if (response.data === "noToken") {
       setIsLogin(false);
-      setUser("");
+      // redux
+      dispatch(up(""));
+      // setUser("");
     } else {
       setIsLogin(true);
-      setUser(response.data.name);
+      // redux
+      dispatch(up(response.data.name));
+      // setUser(response.data.name);
       setUserId(response.data.id);
     }
   };
 
-  return { isLogin, user, userId, setUserId, setIsLogin, setUser, fetchLogin };
+  // return { isLogin, user, userId, setUserId, setIsLogin, setUser, fetchLogin };
+  return { isLogin, userId, setUserId, setIsLogin, fetchLogin };
 }

@@ -1,10 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
 const counterSlice = createSlice({
   name: "counterSlice",
-  initialState: { value: 0 },
+  initialState: { value: "" },
   reducers: {
     up: (state, action) => {
-      state.value = state.value + action.payload;
+      state.value = action.payload;
     },
   },
 });
