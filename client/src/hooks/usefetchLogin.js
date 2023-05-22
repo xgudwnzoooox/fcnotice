@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 
 // redux
-import { up } from "../reducers/counterSlice";
+import { setUserName } from "../reducers/userNameSlice";
 
 export default function useFetchLogin() {
   //개발용
@@ -20,18 +20,17 @@ export default function useFetchLogin() {
     });
 
     //redux
-    // dispatch(up(5));
 
     // jwt empty 의 경우, 서버에서 반환하는 response.data는 'logout' 문자열로 지정
     if (response.data === "noToken") {
       setIsLogin(false);
       // redux
-      dispatch(up(""));
+      dispatch(setUserName(""));
       // setUser("");
     } else {
       setIsLogin(true);
       // redux
-      dispatch(up(response.data.name));
+      dispatch(setUserName(response.data.name));
       // setUser(response.data.name);
       setUserId(response.data.id);
     }

@@ -8,22 +8,19 @@ import { useNavigate } from "react-router-dom";
 import "./TopRightBar.css";
 
 //redux
-import { useDispatch, useSelector } from "react-redux";
-import { up } from "../../reducers/counterSlice";
+import { useSelector } from "react-redux";
 
 export default function TopRightBar() {
   const { isLogin, user, setIsLogin, setUser, fetchLogin } = useFetchLogin();
   const navigate = useNavigate();
   //redux
-  const count = useSelector((state) => {
-    return state.counter.value;
+  const userName = useSelector((state) => {
+    return state.userName.value;
   });
-  const dispatch = useDispatch();
-  //
 
   useEffect(() => {
     fetchLogin();
-  }, [isLogin, count]);
+  }, [isLogin, userName]);
   // }, [isLogin, user]);
 
   useInterval(isLogin);
@@ -40,8 +37,7 @@ export default function TopRightBar() {
             onClick={() => onClickHandler()}
             className="user-name"
             // redux
-          >{`${count} 님`}</div>
-          {/* >{`${user} 님`}</div> */}
+          >{`${userName} 님`}</div>
           <LogoutButton setIsLogin={setIsLogin} setUser={setUser} />
         </>
       ) : (
