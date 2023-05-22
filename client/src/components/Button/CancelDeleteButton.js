@@ -8,7 +8,7 @@ export default function CancelDeleteButton(props) {
 
   const onClickHandler = async (e) => {
     const id = props.id;
-    await axios.post(`http://localhost:4000/content/cancel_trash`, {
+    await axios.post(`http://localhost:4000/content/restoration`, {
       id,
     });
     setClickCancelDeleteButton(true);

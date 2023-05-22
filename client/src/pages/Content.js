@@ -24,7 +24,7 @@ function Content() {
 
   const updateContentViews = async () => {
     if (views) {
-      await axios.post("http://localhost:4000/content/update_content_process", {
+      await axios.put("http://localhost:4000/content", {
         id,
       });
       setViews(false);

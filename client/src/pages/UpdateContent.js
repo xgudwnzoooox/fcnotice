@@ -14,7 +14,7 @@ function UpdateContent() {
 
   const fetchData = async () => {
     const response = await axios.get(`http://localhost:4000/content/${id}`);
-    setImage(response.data[0].image.split("/").pop());
+    setImage(response.data[0].image?.split("/").pop());
     setTitle(response.data[0].title);
     setDescription(response.data[0].description);
   };
@@ -38,8 +38,8 @@ function UpdateContent() {
     };
 
     try {
-      const response = await axios.post(
-        "http://localhost:4000/content/update_content_process",
+      const response = await axios.put(
+        "http://localhost:4000/content",
         formData,
         config
       );

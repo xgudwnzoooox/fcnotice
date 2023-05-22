@@ -15,10 +15,9 @@ export default function useFetchLogin() {
   const dispatch = useDispatch();
 
   const fetchLogin = async () => {
-    const response = await axios.get(
-      `http://localhost:4000/login/success`,
-      { withCredentials: true } // 로그인 정보 확인
-    );
+    const response = await axios.get(`http://localhost:4000/login/userInfo`, {
+      withCredentials: true,
+    });
 
     //redux
     // dispatch(up(5));

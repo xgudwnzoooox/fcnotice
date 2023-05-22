@@ -9,22 +9,20 @@ export default function PreviousNextContentList(props) {
   const { id } = props;
 
   const fetchData = async () => {
-    const responsePrevious = await axios.get(
-      `http://localhost:4000/content/prev/${id}`
-    );
-    if (responsePrevious.data.length !== 0) {
-      responsePrevious.data[0].prenexText = "이전 게시물";
-    }
-
-    const responseNext = await axios.get(
-      `http://localhost:4000/content/next/${id}`
+    const response = await axios.get(
+      `http://localhost:4000/content/prevNextContent/${id}`,
+      { withCredentials: true }
     );
 
-    if (responseNext.data.length !== 0) {
-      responseNext.data[0].prenexText = "다음 게시물";
+    if (response.data.prev.length !== 0) {
+      response.data.prev[0].prenexText = "이전 게시물";
     }
 
-    setPreviousNextContent(responsePrevious.data.concat(responseNext.data));
+    if (response.data.next.length !== 0) {
+      response.data.next[0].prenexText = "다음 게시물";
+    }
+
+    setPreviousNextContent(response.data.prev.concat(response.data.next));
   };
 
   useEffect(() => {

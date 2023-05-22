@@ -16,12 +16,12 @@ export const useInterval = () => {
     const startInterval = () => {
       intervalId = setInterval(async () => {
         // 실행할 코드 작성
-        const response = await axios.get(
-          `http://localhost:4000/login/refreshToken`,
+        const response = await axios.post(
+          `http://localhost:4000/login/refreshedAccessToken`,
           { withCredentials: true } // 로그인 정보 확인
         );
         console.log("Interval is running");
-      }, 100000000); // 0.5초마다 실행되도록 설정 (원하는 간격으로 변경 가능)
+      }, 10000000); // 0.5초마다 실행되도록 설정 (원하는 간격으로 변경 가능)
     };
 
     const stopInterval = () => {

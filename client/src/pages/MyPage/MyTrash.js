@@ -20,7 +20,7 @@ function MyTrash() {
 
   const fetchData = async () => {
     const response = await axios.get(
-      `http://localhost:4000/content/trash?limit=${limit}&orderBy=${orderBy}&orderField=${orderField}&page=${page}`,
+      `http://localhost:4000/content/TrashContent?limit=${limit}&orderBy=${orderBy}&orderField=${orderField}&page=${page}`,
       { withCredentials: true }
     );
     setClickCancelDeleteButton(false); // canceldelete 버튼 클릭 시, 바로 랜더링 일어나도록

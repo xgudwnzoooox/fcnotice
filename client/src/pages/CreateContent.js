@@ -36,7 +36,7 @@ function CreateContent() {
 
     try {
       const response = await axios.post(
-        "http://localhost:4000/content/create_content_process",
+        "http://localhost:4000/content",
         formData,
         config
         // { withCredentials: true }

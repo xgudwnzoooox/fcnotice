@@ -34,13 +34,6 @@ export default function TopRightBar() {
 
   return (
     <div className="top-right-bar">
-      {/* redux */}
-      <span
-        onClick={() => {
-          dispatch(up(2));
-        }}
-      >{`redux : ${count} ---`}</span>
-
       {isLogin ? (
         <>
           <div

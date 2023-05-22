@@ -14,7 +14,7 @@ export default function Login() {
   const onSubmitHandler = async (e) => {
     e.preventDefault();
     await axios.post(
-      `http://localhost:4000/login`,
+      `http://localhost:4000/login/firstAccessToken`,
       { email, password },
       { withCredentials: true }
     );

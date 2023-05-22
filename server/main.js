@@ -1,20 +1,20 @@
-// 기본 템플릿
-var express = require("express");
-var app = express();
-var bodyParser = require("body-parser");
-var compression = require("compression");
-var helmet = require("helmet");
-var cors = require("cors");
-var db = require("./lib/db");
+const express = require("express");
+const app = express();
+const bodyParser = require("body-parser");
+const compression = require("compression");
+const helmet = require("helmet");
+const cors = require("cors");
 const dotenv = require("dotenv");
 const cookieParser = require("cookie-parser");
+const db = require("./lib/db");
+
 dotenv.config();
 
 app.use(cookieParser());
 app.use(
   cors({
     origin: "http://localhost:3000",
-    methods: ["GET", "POST"],
+    methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
   })
 );
@@ -25,25 +25,26 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(compression());
 app.use("/image", express.static("./uploads"));
 
-var indexRouter = require("./routes/index");
-var loginRouter = require("./routes/login");
-var contentRouter = require("./routes/content");
-var searchRouter = require("./routes/search");
+const indexRouter = require("./routes/index");
+const loginRouter = require("./routes/login");
+const contentRouter = require("./routes/content");
+const searchRouter = require("./routes/search");
 
 app.use("/", indexRouter);
 app.use("/login", loginRouter);
 app.use("/content", contentRouter);
 app.use("/search", searchRouter);
 
-app.use(function (req, res, next) {
-  res.status(404).send("Sorry cant find that!");
+app.use((req, res, next) => {
+  res.status(404).send("Sorry, can't find that!");
 });
 
-app.use(function (err, req, res, next) {
+app.use((err, req, res, next) => {
   console.error(err.stack);
   res.status(500).send("Something broke!");
 });
 
-app.listen(4000, function () {
-  console.log("Example app listening on port 4000!");
+const PORT = process.env.PORT;
+app.listen(PORT, () => {
+  console.log(`Example app listening on port ${PORT}!`);
 });

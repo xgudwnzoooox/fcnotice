@@ -9,8 +9,9 @@ export default function DeleteButton(props) {
   const onClickHandler = async (e) => {
     // e.preventDefault();
     const id = props.id;
-    await axios.post(`http://localhost:4000/content/delete_content_process`, {
-      id,
+    await axios.delete(`http://localhost:4000/content`, {
+      // delete는 요청데이터를 설정 객체의 data 속성으로 보냄
+      data: { id },
     });
     setClickDeleteButton(true);
     navigate(`/mypage/content`);
