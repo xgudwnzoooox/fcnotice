@@ -2,33 +2,6 @@
   margin: 20px;
 }
 
-.search-container {
-  margin-bottom: 20px;
-  display: inline-block;
-}
-
-.filter-container {
-  margin-bottom: 20px;
-  display: inline-block;
-}
-
-.filter-select {
-  margin-left: 20px;
-  margin-right: 10px;
-}
-
-.pagination-container {
-  display: flex;
-  justify-content: center;
-  margin-top: 30px;
-}
-
-.page-number {
-  display: inline-block;
-  margin-right: 30px;
-  cursor: pointer;
-}
-
 .table-container {
   overflow-x: auto;
   margin-bottom: 20px;

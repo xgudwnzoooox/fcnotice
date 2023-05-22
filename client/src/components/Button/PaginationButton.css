@@ -1,0 +1,11 @@
+.pagination-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 30px;
+}
+
+.page-number {
+  display: inline-block;
+  margin-right: 30px;
+  cursor: pointer;
+}

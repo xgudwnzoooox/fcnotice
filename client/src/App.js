@@ -11,15 +11,12 @@ import MyContent from "./pages/MyPage/MyContent";
 import MyTrash from "./pages/MyPage/MyTrash";
 import MyInfo from "./pages/MyPage/MyInfo";
 import "./App.css";
-
-// redux
 import { Provider } from "react-redux";
 import store from "./store";
 
 function App() {
   return (
     <BrowserRouter>
-      {/* redux provider */}
       <Provider store={store}>
         <div className="top-bar">
           <HomeButton />

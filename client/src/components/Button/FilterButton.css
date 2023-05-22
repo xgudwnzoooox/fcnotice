@@ -1,0 +1,9 @@
+.filter-container {
+  margin-bottom: 20px;
+  display: inline-block;
+}
+
+.filter-select {
+  margin-left: 20px;
+  margin-right: 10px;
+}

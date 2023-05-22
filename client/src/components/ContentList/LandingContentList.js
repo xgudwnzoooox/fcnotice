@@ -1,14 +1,14 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import useKoreanTimeSimple from "../../hooks/useKoreanTimeSimple";
-import UpdateButton from "../Button/UpdateButton";
-import DeleteButton from "../Button/DeleteButton";
 import "./LandingContentList.css";
+import { useSelector } from "react-redux";
 
 export default function LandingContentList(props) {
-  const { content, updateContent, setClickDeleteButton } = props;
   const { changeToKstDateSimple } = useKoreanTimeSimple();
   const navigate = useNavigate();
+
+  const content = useSelector((state) => state.content.value);
 
   const onClickList = (link) => {
     navigate(link);

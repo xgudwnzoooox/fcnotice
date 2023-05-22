@@ -28,12 +28,10 @@ app.use("/image", express.static("./uploads"));
 const indexRouter = require("./routes/index");
 const loginRouter = require("./routes/login");
 const contentRouter = require("./routes/content");
-const searchRouter = require("./routes/search");
 
 app.use("/", indexRouter);
 app.use("/login", loginRouter);
 app.use("/content", contentRouter);
-app.use("/search", searchRouter);
 
 app.use((req, res, next) => {
   res.status(404).send("Sorry, can't find that!");

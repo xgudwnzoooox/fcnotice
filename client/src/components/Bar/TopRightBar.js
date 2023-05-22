@@ -6,30 +6,18 @@ import LogoutButton from "../Button/LogoutButton";
 import LoginButton from "../Button/LoginButton";
 import { useNavigate } from "react-router-dom";
 import "./TopRightBar.css";
-
-//redux
 import { useSelector } from "react-redux";
 
 export default function TopRightBar() {
   const { fetchLogin } = useFetchLogin();
-  // const { isLogin, user, setIsLogin, setUser, fetchLogin } = useFetchLogin();
   const navigate = useNavigate();
 
-  //redux
-  const userName = useSelector((state) => {
-    return state.userName.value;
-  });
-  const isLogin = useSelector((state) => {
-    return state.isLogin.value;
-  });
-  const userId = useSelector((state) => {
-    return state.userId.value;
-  });
+  const userName = useSelector((state) => state.userName.value);
+  const isLogin = useSelector((state) => state.isLogin.value);
 
   useEffect(() => {
     fetchLogin();
   }, [isLogin, userName]);
-  // }, [isLogin, user]);
 
   useInterval(isLogin);
 
@@ -44,10 +32,8 @@ export default function TopRightBar() {
           <div
             onClick={() => onClickHandler()}
             className="user-name"
-            // redux
           >{`${userName} 님`}</div>
           <LogoutButton />
-          {/* <LogoutButton setIsLogin={setIsLogin} setUser={setUser} /> */}
         </>
       ) : (
         <LoginButton />
