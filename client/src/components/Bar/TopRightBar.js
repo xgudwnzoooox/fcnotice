@@ -11,11 +11,19 @@ import "./TopRightBar.css";
 import { useSelector } from "react-redux";
 
 export default function TopRightBar() {
-  const { isLogin, user, setIsLogin, setUser, fetchLogin } = useFetchLogin();
+  const { fetchLogin } = useFetchLogin();
+  // const { isLogin, user, setIsLogin, setUser, fetchLogin } = useFetchLogin();
   const navigate = useNavigate();
+
   //redux
   const userName = useSelector((state) => {
     return state.userName.value;
+  });
+  const isLogin = useSelector((state) => {
+    return state.isLogin.value;
+  });
+  const userId = useSelector((state) => {
+    return state.userId.value;
   });
 
   useEffect(() => {
@@ -38,7 +46,8 @@ export default function TopRightBar() {
             className="user-name"
             // redux
           >{`${userName} 님`}</div>
-          <LogoutButton setIsLogin={setIsLogin} setUser={setUser} />
+          <LogoutButton />
+          {/* <LogoutButton setIsLogin={setIsLogin} setUser={setUser} /> */}
         </>
       ) : (
         <LoginButton />

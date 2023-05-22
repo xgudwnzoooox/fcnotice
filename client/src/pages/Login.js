@@ -3,10 +3,14 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import useFetchLogin from "../hooks/usefetchLogin";
 import "./Login.css"; // CSS 파일 import
+import { useDispatch } from "react-redux";
+import { setIsLogin } from "../reducers/isLoginSlice";
 
 export default function Login() {
   const navigate = useNavigate();
-  const { setIsLogin } = useFetchLogin();
+  const dispatch = useDispatch();
+
+  // const { setIsLogin } = useFetchLogin();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -19,7 +23,8 @@ export default function Login() {
       { withCredentials: true }
     );
 
-    setIsLogin(true);
+    // setIsLogin(true);
+    dispatch(setIsLogin(true));
 
     setEmail("");
     setPassword("");

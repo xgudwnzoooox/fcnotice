@@ -4,10 +4,15 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import { intervalId } from "../../hooks/useInterval";
 import "./LogoutButton.css";
+import { useDispatch } from "react-redux";
+import { setUserName } from "../../reducers/userNameSlice";
+import { setIsLogin } from "../../reducers/isLoginSlice";
+import { setUserId } from "../../reducers/userIdSlice";
 
 export default function LogoutButton(props) {
   const navigate = useNavigate();
-  const { setIsLogin, setUser } = props;
+  const dispatch = useDispatch();
+  // const { setIsLogin, setUser } = props;
 
   const onClickLogoutHandler = async (e) => {
     clearInterval(intervalId); // 인터벌 정지
@@ -20,8 +25,11 @@ export default function LogoutButton(props) {
       }
     );
 
-    setIsLogin(false);
-    setUser("");
+    // setIsLogin(false);
+    // setUser("");
+    dispatch(setUserName(""));
+    dispatch(setIsLogin(false));
+    dispatch(setUserId(0));
     navigate(`/`);
   };
 

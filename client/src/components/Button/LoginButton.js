@@ -5,10 +5,10 @@ import "./LoginButton.css";
 
 export default function LoginButton(props) {
   const navigate = useNavigate();
-  const { setIsLogin } = props;
+  // const { setIsLogin } = props;
 
   const onClickHandler = async (e) => {
-    navigate(`/login`, { state: { setIsLogin: setIsLogin } });
+    navigate(`/login`);
   };
   return (
     <div onClick={onClickHandler} className="login-button">
