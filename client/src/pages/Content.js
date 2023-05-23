@@ -8,11 +8,17 @@ import useUpdateContentViews from "../hooks/useUpdateContentViews";
 import { setContentId } from "../reducers/contentIdSlice";
 import useFetchContentDetailData from "../hooks/useFetchContentDetailData";
 import ContentDetailForm from "../components/Form/ContentDetailForm";
+import useCheckAccess from "../hooks/useCheckAccess";
 
 function Content() {
   const { id } = useParams();
   const dispatch = useDispatch();
   dispatch(setContentId(id));
+  // const { checkAccess } = useCheckAccess();
+  // useEffect(() => {
+  //   checkAccess();
+  // }, []);
+  useCheckAccess();
 
   const contentId = useSelector((state) => state.contentId.value);
   const isCookie = useSelector((state) => state.isCookie.value);
