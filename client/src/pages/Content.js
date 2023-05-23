@@ -1,54 +1,41 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import axios from "axios";
 import { useParams } from "react-router";
-import BackButton from "../components/Button/BackButton";
-import UpdateButton from "../components/Button/UpdateButton";
 import useKoreanTime from "../hooks/useKoreanTime";
 import PreviousNextContentList from "../components/ContentList/PreviousNextContentList";
-import { useInterval } from "../hooks/useInterval";
-import useFetchLogin from "../hooks/usefetchLogin";
-import useCheckAccess from "../hooks/useCheckAccess";
-import "./Content.css"; // CSS 파일을 import 해주세요.
+import "./Content.css";
+import { useDispatch, useSelector } from "react-redux";
+import { setViews } from "../reducers/viewsSlice";
+import { setContentDetail } from "../reducers/contentDetailSlice";
+import { setPreviousNextContent } from "../reducers/previoustNextContentSlice";
+import useUpdateContentViews from "../hooks/useUpdateContentViews";
+import { setContentId } from "../reducers/contentIdSlice";
+import useFetchContentDetailData from "../hooks/useFetchContentDetailData";
 
 function Content() {
   const { id } = useParams();
+  const dispatch = useDispatch();
+  dispatch(setContentId(id));
   const { changeToKstDate } = useKoreanTime();
-  const [contentDetail, setContentDetail] = useState([]);
-  const { isLogin } = useFetchLogin();
-  const { checkAccess } = useCheckAccess();
-  useEffect(() => {
-    checkAccess();
-  }, []);
+  const contentId = useSelector((state) => state.contentId.value);
+  const isCookie = useSelector((state) => state.isCookie.value);
+  const views = useSelector((state) => state.views.value);
+  const contentDetail = useSelector((state) => state.contentDetail.value);
 
-  const [views, setViews] = useState(false);
-
-  const updateContentViews = async () => {
-    if (views) {
-      await axios.put("http://localhost:4000/content", {
-        id,
-      });
-      setViews(false);
-    }
-  };
-
-  const fetchContentData = async () => {
-    const response = await axios.get(`http://localhost:4000/content/${id}`);
-    setContentDetail(response.data);
-  };
-
-  useInterval(isLogin, id);
+  const { updateContentViews } = useUpdateContentViews();
+  const { fetchContentDetailData } = useFetchContentDetailData();
 
   useEffect(() => {
-    fetchContentData();
-  }, [id]);
+    fetchContentDetailData(isCookie);
+  }, [contentId]);
 
   useEffect(() => {
     updateContentViews();
   }, [views]);
 
   useEffect(() => {
-    setViews(true);
-  }, [id]);
+    dispatch(setViews(true));
+  }, [contentId]);
 
   return (
     <div className="content-container">
@@ -80,7 +67,7 @@ function Content() {
           </div>
         </div>
       ))}
-      <PreviousNextContentList id={id} />
+      <PreviousNextContentList />
     </div>
   );
 }

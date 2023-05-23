@@ -38,12 +38,12 @@ router.post("/", upload.single("image"), (req, res) => {
 // update
 router.put("/", upload.single("image"), (req, res) => {
   try {
-    const { id, title, description } = req.body;
+    const { contentId, title, description } = req.body;
     const image = req.file ? "/image/" + req.file.filename : null;
     const query = `UPDATE mongTable SET title = COALESCE(?, title), image = COALESCE(?, image), description = COALESCE(?, description), updatedDate = NOW(), views_Num = views_Num + 1 WHERE id = ?;`;
 
-    db.query(query, [title, image, description, id], (err, result) => {
-      res.json(id);
+    db.query(query, [title, image, description, contentId], (err, result) => {
+      res.json(contentId);
     });
   } catch (error) {
     next(error);
@@ -72,34 +72,6 @@ router.post("/restoration", (req, res) => {
 
     db.query(query, [id], (err, result) => {
       res.json(id);
-    });
-  } catch (error) {
-    next(error);
-  }
-});
-
-// 이전과 다음 게시물
-router.get("/prevNextContent/:pageId", (req, res, next) => {
-  try {
-    const token = req.cookies.accessToken;
-    const id = req.params.pageId;
-    let data = "";
-    let token_name = "";
-    let author_id = 0;
-    if (token) {
-      data = jwt.verify(token, process.env.ACCESS_SECRET);
-      author_id = data.id;
-    }
-
-    const prevQuery = `SELECT mongTable.id, title, image, description, created, updatedDate, name FROM mongTable LEFT JOIN author ON mongTable.author_id = author.id WHERE mongTable.id < ? AND deleted = 0 AND mongTable.author_id = ? ORDER BY mongTable.id DESC LIMIT 1`;
-    const nextQuery = `SELECT mongTable.id, title, image, description, created, updatedDate, name FROM mongTable LEFT JOIN author ON mongTable.author_id = author.id WHERE mongTable.id > ? AND deleted = 0 AND mongTable.author_id = ? ORDER BY mongTable.id ASC LIMIT 1`;
-
-    db.query(prevQuery, [id, author_id], (err, prevResult) => {
-      if (err) throw err;
-      db.query(nextQuery, [id, author_id], (err, nextResult) => {
-        if (err) throw err;
-        res.json({ prev: prevResult, next: nextResult });
-      });
     });
   } catch (error) {
     next(error);
@@ -151,14 +123,57 @@ router.get("/TrashContent", (req, res) => {
   }
 });
 
-// show content detail
-router.get("/:pageId", (req, res) => {
+// show content detail with previous and next content
+router.get("/:pageId", (req, res, next) => {
   try {
-    let id = req.params.pageId;
-    const query = `SELECT mongTable.id, title, image, description, created, updatedDate, views_Num, name FROM mongTable LEFT JOIN author ON mongTable.author_id = author.id WHERE mongTable.id = ?`;
+    const id = req.params.pageId;
+    const token = req.cookies.accessToken;
+    let data = "";
+    let author_id = 0;
+    if (token) {
+      data = jwt.verify(token, process.env.ACCESS_SECRET);
+      author_id = data.id;
+    }
 
-    db.query(query, [id], (err, result) => {
-      res.json(result);
+    const query = `
+      SELECT mongTable.id, title, image, description, created, updatedDate, views_Num, name 
+      FROM mongTable 
+      LEFT JOIN author ON mongTable.author_id = author.id 
+      WHERE mongTable.id = ?`;
+
+    let prevQuery = `
+    SELECT mongTable.id, title, image, description, created, updatedDate, name 
+    FROM mongTable 
+    LEFT JOIN author ON mongTable.author_id = author.id 
+    WHERE mongTable.id < ? AND deleted = 0`;
+
+    let nextQuery = `
+    SELECT mongTable.id, title, image, description, created, updatedDate, name 
+    FROM mongTable 
+    LEFT JOIN author ON mongTable.author_id = author.id 
+    WHERE mongTable.id > ${id} AND deleted = 0`;
+
+    if (author_id) {
+      // 작성자(author)가 지정된 경우 해당 작성자로 필터링
+      prevQuery += ` AND mongTable.author_id = '${author_id}'`;
+      nextQuery += ` AND mongTable.author_id = '${author_id}'`;
+    }
+
+    prevQuery += ` ORDER BY mongTable.id DESC LIMIT 1`;
+    nextQuery += ` ORDER BY mongTable.id ASC LIMIT 1`;
+
+    db.query(query, [id, author_id], (err, result) => {
+      if (err) throw err;
+
+      db.query(prevQuery, [id, author_id], (err, prevResult) => {
+        if (err) throw err;
+
+        db.query(nextQuery, [id, author_id], (err, nextResult) => {
+          if (err) throw err;
+
+          res.json({ current: result, prev: prevResult, next: nextResult });
+        });
+      });
     });
   } catch (error) {
     next(error);

@@ -82,7 +82,6 @@ function MyTrash() {
       </div>
       <MyTrashContentList
         content={content}
-        updateContent={updateContent}
         setClickCancelDeleteButton={setClickCancelDeleteButton}
       />
       <div style={{ display: "inline-block", margin: "30px 240px 0 450px" }}>

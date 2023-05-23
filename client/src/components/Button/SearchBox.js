@@ -37,7 +37,7 @@ function SearchBox(props) {
         <input
           type="submit"
           value="검색"
-          style={{ width: "60px", height: "27px" }}
+          style={{ width: "60px", height: "27px", margin: "0px 20px 0 0" }}
         />
         <p />
       </form>

@@ -10,6 +10,11 @@ import limitSlice from "./reducers/limitSlice";
 import orderBySlice from "./reducers/orderBySlice";
 import orderFieldSlice from "./reducers/orderFieldSlice";
 import clickDeleteButtonSlice from "./reducers/clickDeleteButtonSlice";
+import isCookieSlice from "./reducers/isCookieSlice";
+import contentDetailSlice from "./reducers/contentDetailSlice";
+import viewsSlice from "./reducers/viewsSlice";
+import previousNextContentSlice from "./reducers/previoustNextContentSlice";
+import contentIdSlice from "./reducers/contentIdSlice";
 
 const store = configureStore({
   reducer: {
@@ -24,6 +29,11 @@ const store = configureStore({
     orderBy: orderBySlice.reducer,
     orderField: orderFieldSlice.reducer,
     clickDeleteButton: clickDeleteButtonSlice.reducer,
+    isCookie: isCookieSlice.reducer,
+    contentDetail: contentDetailSlice.reducer,
+    views: viewsSlice.reducer,
+    previousNextContent: previousNextContentSlice.reducer,
+    contentId: contentIdSlice.reducer,
   },
 });
 export default store;

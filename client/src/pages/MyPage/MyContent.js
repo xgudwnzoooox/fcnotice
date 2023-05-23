@@ -1,105 +1,37 @@
-import { useState, useEffect } from "react";
-import axios from "axios";
-import MyContentList from "../../components/ContentList/MyContentList";
-import useFetchLogin from "../../hooks/usefetchLogin";
-import MyPageBar from "../../components/Bar/MyPageBar";
 import "./MyContent.css";
+import { useEffect } from "react";
+import { useSelector } from "react-redux";
+import useFetchContentData from "../../hooks/useFetchContentData";
+import SearchBox from "../../components/Button/SearchBox";
+import FilterButton from "../../components/Button/FilterButton";
+import LandingContentList from "../../components/ContentList/LandingContentList";
+import PaginationButton from "../../components/Button/PaginationButton";
+import CreateButton from "../../components/Button/CreateButton";
+import MyPageBar from "../../components/Bar/MyPageBar";
+import MyContentList from "../../components/ContentList/MyContentList";
 
 function MyContent() {
-  const { isLogin } = useFetchLogin();
-
-  const [content, setContent] = useState([]);
-  const [page, setPage] = useState(1); // 현재 페이지 상태 추가
-  const [totalPages, setTotalPages] = useState(1); // 총 페이지 수 상태 추가
-
-  const [limit, setLimit] = useState(10); // 게시글 보기 수
-  const [orderBy, setOrderBy] = useState("ASC"); // 00내림차순
-  const [orderField, setOrderField] = useState("created"); // 작성일,수정일, 조회수 등
-
-  const [clickDeleteButton, setClickDeleteButton] = useState(false);
-
-  const fetchData = async () => {
-    const response = await axios.get(
-      `http://localhost:4000?limit=${limit}&orderBy=${orderBy}&orderField=${orderField}&page=${page}`,
-      { withCredentials: true }
-    );
-    setClickDeleteButton(false); // delete 버튼 클릭 시, 바로 랜더링 일어나도록
-    setContent(response.data.content);
-    setTotalPages(response.data.totalPages); // 총 페이지 수 설정
-  };
+  const { fetchContentData } = useFetchContentData();
+  const isLogin = useSelector((state) => state.isLogin.value);
+  const limit = useSelector((state) => state.limit.value);
+  const orderBy = useSelector((state) => state.orderBy.value);
+  const orderField = useSelector((state) => state.orderField.value);
+  const page = useSelector((state) => state.page.value);
+  const clickDeleteButton = useSelector(
+    (state) => state.clickDeleteButton.value
+  );
 
   useEffect(() => {
-    fetchData();
+    fetchContentData(true);
   }, [limit, orderBy, orderField, page, clickDeleteButton, isLogin]);
 
-  const updateContent = (id) => {
-    setContent((prevContent) => prevContent.filter((item) => item.id !== id));
-  };
-
-  const handleLimitChange = (event) => {
-    setPage(1); // 페이지를 첫 페이지로 변경
-    setLimit(parseInt(event.target.value));
-  };
-
-  const handleOrderChange = (event) => {
-    setPage(1);
-    const value = event.target.value;
-    const [newOrderBy, newOrderField] = value.split(" ");
-    setOrderBy(newOrderBy);
-    setOrderField(newOrderField);
-  };
-
-  const handlePageChange = (event, value) => {
-    setPage(value);
-  };
-
-  const pageNumbers = [];
-  for (let i = 1; i <= totalPages; i++) {
-    pageNumbers.push(i);
-  }
-
   return (
-    <div>
+    <div className="landing-container">
       <MyPageBar />
-      <p />
-      <div className="select-wrapper">
-        <select
-          value={limit}
-          onChange={handleLimitChange}
-          className="select-limit"
-        >
-          <option value={10}>10개 보기</option>
-          <option value={20}>20개 보기</option>
-        </select>
-        <select
-          value={`${orderBy} ${orderField}`}
-          onChange={handleOrderChange}
-          className="select-order"
-        >
-          <option value="DESC created">작성일 내림차순</option>
-          <option value="ASC created">작성일 오름차순</option>
-          <option value="DESC updatedDate">수정일 내림차순</option>
-          <option value="ASC updatedDate">수정일 오름차순</option>
-          <option value="DESC views_Num">조회수 내림차순</option>
-          <option value="ASC views_Num">조회수 오름차순</option>
-        </select>
-      </div>
-      <MyContentList
-        content={content}
-        updateContent={updateContent}
-        setClickDeleteButton={setClickDeleteButton}
-      />
-      <div className="page-numbers">
-        {pageNumbers.map((number) => (
-          <div
-            key={number}
-            onClick={(event) => handlePageChange(event, number)}
-            className="page-number"
-          >
-            {number}
-          </div>
-        ))}
-      </div>
+      <FilterButton />
+      <MyContentList />
+      <PaginationButton />
+      <CreateButton />
     </div>
   );
 }

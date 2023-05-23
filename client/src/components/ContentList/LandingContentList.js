@@ -1,18 +1,13 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
-import useKoreanTimeSimple from "../../hooks/useKoreanTimeSimple";
 import "./LandingContentList.css";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import UsualContentList from "./UsualContentList";
+import { setIsCookie } from "../../reducers/isCookieSlice";
 
 export default function LandingContentList(props) {
-  const { changeToKstDateSimple } = useKoreanTimeSimple();
-  const navigate = useNavigate();
-
   const content = useSelector((state) => state.content.value);
-
-  const onClickList = (link) => {
-    navigate(link);
-  };
+  const dispatch = useDispatch();
+  dispatch(setIsCookie(false));
 
   return (
     <table className="content-list-table">
@@ -27,20 +22,8 @@ export default function LandingContentList(props) {
       </thead>
       <tbody>
         {content.map((contentData) => (
-          <tr
-            key={contentData.id}
-            onClick={() => onClickList(`/content/${contentData.id}`)}
-            className="content-list-row"
-          >
-            <td>{contentData.title.slice(0, 20)}...</td>
-            <td>{contentData.name}</td>
-            <td>{changeToKstDateSimple(contentData.created)}</td>
-            <td>
-              {contentData.updatedDate
-                ? changeToKstDateSimple(contentData.updatedDate)
-                : "-"}
-            </td>
-            <td>{contentData.views_Num}</td>
+          <tr key={contentData.id} className="content-list-row">
+            <UsualContentList contentData={contentData} />
           </tr>
         ))}
       </tbody>

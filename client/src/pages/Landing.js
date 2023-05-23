@@ -17,7 +17,8 @@ function Landing() {
   const page = useSelector((state) => state.page.value);
 
   useEffect(() => {
-    fetchContentData();
+    // 인자는 쿠키 정보 전달 여부를 뜻함. true > 쿠키전달(=유저 jwt 전달)
+    fetchContentData(false);
   }, [limit, orderBy, orderField, page, isLogin]);
 
   return (

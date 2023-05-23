@@ -12,9 +12,11 @@ export default function useFetchContentData() {
   const orderField = useSelector((state) => state.orderField.value);
   const page = useSelector((state) => state.page.value);
 
-  const fetchContentData = async () => {
+  const fetchContentData = async (useUserId) => {
     const response = await axios.get(
-      `http://localhost:4000?limit=${limit}&orderBy=${orderBy}&orderField=${orderField}&page=${page}&keyword=${keyword}`
+      // `http://localhost:4000?limit=${limit}&orderBy=${orderBy}&orderField=${orderField}&page=${page}&keyword=${keyword}`
+      `http://localhost:4000?limit=${limit}&orderBy=${orderBy}&orderField=${orderField}&page=${page}&keyword=${keyword}`,
+      { withCredentials: useUserId }
     );
     dispatch(setClickDeleteButton(false));
     dispatch(setContent(response.data.content));
