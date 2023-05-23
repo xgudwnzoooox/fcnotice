@@ -9,7 +9,6 @@ export default function useUpdateContentViews() {
 
   const updateContentViews = async () => {
     if (views) {
-      console.log(views, contentId);
       await axios.put("http://localhost:4000/content", {
         contentId,
       });

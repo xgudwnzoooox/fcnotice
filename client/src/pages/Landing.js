@@ -6,7 +6,7 @@ import SearchBox from "../components/Button/SearchBox";
 import CreateButton from "../components/Button/CreateButton";
 import FilterButton from "../components/Button/FilterButton";
 import PaginationButton from "../components/Button/PaginationButton";
-import LandingContentList from "../components/ContentList/LandingContentList";
+import LandingContentList from "../components/Form/LandingContentList";
 
 function Landing() {
   const { fetchContentData } = useFetchContentData();
@@ -18,7 +18,7 @@ function Landing() {
 
   useEffect(() => {
     // 인자는 쿠키 정보 전달 여부를 뜻함. true > 쿠키전달(=유저 jwt 전달)
-    fetchContentData(false);
+    fetchContentData(false, 0);
   }, [limit, orderBy, orderField, page, isLogin]);
 
   return (

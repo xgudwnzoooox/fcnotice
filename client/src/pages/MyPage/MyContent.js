@@ -2,13 +2,11 @@ import "./MyContent.css";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import useFetchContentData from "../../hooks/useFetchContentData";
-import SearchBox from "../../components/Button/SearchBox";
 import FilterButton from "../../components/Button/FilterButton";
-import LandingContentList from "../../components/ContentList/LandingContentList";
 import PaginationButton from "../../components/Button/PaginationButton";
 import CreateButton from "../../components/Button/CreateButton";
 import MyPageBar from "../../components/Bar/MyPageBar";
-import MyContentList from "../../components/ContentList/MyContentList";
+import MyContentList from "../../components/Form/MyContentList";
 
 function MyContent() {
   const { fetchContentData } = useFetchContentData();
@@ -22,7 +20,7 @@ function MyContent() {
   );
 
   useEffect(() => {
-    fetchContentData(true);
+    fetchContentData(true, 0);
   }, [limit, orderBy, orderField, page, clickDeleteButton, isLogin]);
 
   return (

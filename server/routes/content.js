@@ -31,7 +31,7 @@ router.post("/", upload.single("image"), (req, res) => {
       res.json(result.insertId);
     });
   } catch (error) {
-    next(error);
+    console.log(error);
   }
 });
 

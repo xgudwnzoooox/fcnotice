@@ -2,6 +2,9 @@ import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { setContentDetail } from "../reducers/contentDetailSlice";
 import { setPreviousNextContent } from "../reducers/previoustNextContentSlice";
+import { setImage } from "../reducers/imageSlice";
+import { setTitle } from "../reducers/titleSlice";
+import { setDescription } from "../reducers/descriptionSlice";
 
 export default function useFetchContentDetailData() {
   const dispatch = useDispatch();
@@ -14,7 +17,7 @@ export default function useFetchContentDetailData() {
         withCredentials: isCookie,
       }
     );
-
+    //Content.js
     dispatch(setContentDetail(response.data.current));
 
     if (response.data.prev.length !== 0) {
@@ -26,6 +29,11 @@ export default function useFetchContentDetailData() {
     dispatch(
       setPreviousNextContent(response.data.prev.concat(response.data.next))
     );
+
+    //UpdateContent.js
+    dispatch(setImage(response.data.current[0].image?.split("/").pop()));
+    dispatch(setTitle(response.data.current[0].title));
+    dispatch(setDescription(response.data.current[0].description));
   };
   return { fetchContentDetailData };
 }

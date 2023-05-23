@@ -15,6 +15,10 @@ import contentDetailSlice from "./reducers/contentDetailSlice";
 import viewsSlice from "./reducers/viewsSlice";
 import previousNextContentSlice from "./reducers/previoustNextContentSlice";
 import contentIdSlice from "./reducers/contentIdSlice";
+import clickCancelDeleteButtonSlice from "./reducers/clickCancelDeleteButtonSlice";
+import titleSlice from "./reducers/titleSlice";
+import imageSlice from "./reducers/imageSlice";
+import descriptionSlice from "./reducers/descriptionSlice";
 
 const store = configureStore({
   reducer: {
@@ -29,11 +33,15 @@ const store = configureStore({
     orderBy: orderBySlice.reducer,
     orderField: orderFieldSlice.reducer,
     clickDeleteButton: clickDeleteButtonSlice.reducer,
+    clickCancelDeleteButton: clickCancelDeleteButtonSlice.reducer,
     isCookie: isCookieSlice.reducer,
     contentDetail: contentDetailSlice.reducer,
     views: viewsSlice.reducer,
     previousNextContent: previousNextContentSlice.reducer,
     contentId: contentIdSlice.reducer,
+    title: titleSlice.reducer,
+    image: imageSlice.reducer,
+    description: descriptionSlice.reducer,
   },
 });
 export default store;

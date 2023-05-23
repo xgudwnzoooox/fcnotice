@@ -10,6 +10,8 @@ router.get("/", async (req, res, next) => {
     const orderField = req.query.orderField || "created"; // 쿼리 파라미터로 정렬할 필드 받기
     const page = parseInt(req.query.page) || 1; // 쿼리 파라미터로 페이지 번호 받기
     const keyword = req.query.keyword || "";
+    const deleted = req.query.deleted || 0;
+    // console.log(deleted);
 
     const token = req.cookies.accessToken;
     let data = "";
@@ -35,7 +37,7 @@ router.get("/", async (req, res, next) => {
       let query = `SELECT mongTable.id, title, name, created, updatedDate, views_Num
         FROM mongTable
         LEFT JOIN author ON mongTable.author_id = author.id
-        WHERE deleted = 0`;
+        WHERE deleted = ${deleted}`;
 
       if (token_name) {
         // name 값이 있는 경우 해당 name으로 필터링

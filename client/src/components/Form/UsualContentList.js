@@ -3,7 +3,7 @@ import useKoreanTimeSimple from "../../hooks/useKoreanTimeSimple";
 import { useNavigate } from "react-router-dom";
 
 export default function UsualContentList(props) {
-  const { contentData, uInfo } = props;
+  const { contentData } = props;
   const { changeToKstDateSimple } = useKoreanTimeSimple();
   const navigate = useNavigate();
 
@@ -23,7 +23,7 @@ export default function UsualContentList(props) {
         contentData.views_Num,
       ].map((item, index) => (
         <td onClick={() => onClickList(`/content/${contentData.id}`)}>
-          {item}...
+          {index === 0 ? `${item}...` : item}
         </td>
       ))}
     </>

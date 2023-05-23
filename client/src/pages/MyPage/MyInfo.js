@@ -11,7 +11,6 @@ export default function MyInfo() {
     const response = await axios.get(`http://localhost:4000/login/myinfo`, {
       withCredentials: true,
     });
-    console.log(response.data);
 
     setName(response.data.name);
     setEmail(response.data.email);
