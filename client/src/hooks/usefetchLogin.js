@@ -15,6 +15,7 @@ export default function useFetchLogin() {
 
       // jwt empty 의 경우, 서버에서 반환하는 response.data는 'logout' 문자열로 지정
       if (response.data === "noToken") {
+        console.log("dispatch success");
         dispatch(setUserName(""));
         dispatch(setIsLogin(false));
         dispatch(setUserId(0));

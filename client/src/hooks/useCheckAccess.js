@@ -5,12 +5,15 @@ import { useNavigate } from "react-router-dom";
 export default function useCheckAccess() {
   const navigate = useNavigate();
   const isLogin = useSelector((state) => state.isLogin.value);
+
   useEffect(() => {
+    console.log("useEffect check");
     if (isLogin) {
       console.log("success");
     } else {
       navigate("/login", { replace: true });
       alert("로그인 후 사용해주세요");
+      // console.log("로그인");
     }
   }, [isLogin]);
 

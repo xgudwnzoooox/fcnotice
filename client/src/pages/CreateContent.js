@@ -2,9 +2,14 @@ import React from "react";
 import CreateUpdateContentForm from "../components/Form/CreateUpdateContentForm";
 import { useDispatch } from "react-redux";
 import { setImage } from "../reducers/imageSlice";
+import { setTitle } from "../reducers/titleSlice";
+import { setDescription } from "../reducers/descriptionSlice";
 
 export default function CreateContent() {
   const dispatch = useDispatch();
+  dispatch(setTitle(""));
+  dispatch(setDescription(""));
+  dispatch(setImage(""));
 
   const imageDiv = (
     <div className="form-group">

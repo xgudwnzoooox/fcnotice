@@ -1,6 +1,6 @@
 node_modules/
 
-lib/db.js
+# lib/db.js
 
 /uploads
 
