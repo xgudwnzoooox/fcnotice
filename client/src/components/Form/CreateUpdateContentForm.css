@@ -30,15 +30,18 @@ label {
 }
 
 .title-input {
-  height: 50px; /* 게시글 제목 입력란의 높이 */
+  height: 40px; /* 게시글 제목 입력란의 높이 */
+  width: 700px; /* 게시글 제목 입력란의 높이 */
 }
 
 .description-input {
-  height: 100px; /* 게시글 내용 입력란의 높이 */
+  height: 200px; /* 게시글 내용 입력란의 높이 */
+  width: 700px; /* 게시글 제목 입력란의 높이 */
 }
 
 .file-input {
   height: 35px; /* 파일 첨부란의 높이 */
+  width: 700px; /* 게시글 제목 입력란의 높이 */
 }
 
 .submit-button {

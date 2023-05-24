@@ -14,15 +14,18 @@ export default function useFetchContentData() {
   const page = useSelector((state) => state.page.value);
 
   const fetchContentData = async (useUserId, deleted) => {
-    const response = await axios.get(
-      // `http://localhost:4000?limit=${limit}&orderBy=${orderBy}&orderField=${orderField}&page=${page}&keyword=${keyword}`
-      `http://localhost:4000?limit=${limit}&orderBy=${orderBy}&orderField=${orderField}&page=${page}&keyword=${keyword}&deleted=${deleted}`,
-      { withCredentials: useUserId }
-    );
-    dispatch(setClickDeleteButton(false));
-    dispatch(setClickCancelDeleteButton(false));
-    dispatch(setContent(response.data.content));
-    dispatch(setTotalPages(response.data.totalPages));
+    try {
+      const response = await axios.get(
+        `http://localhost:4000?limit=${limit}&orderBy=${orderBy}&orderField=${orderField}&page=${page}&keyword=${keyword}&deleted=${deleted}`,
+        { withCredentials: useUserId }
+      );
+      dispatch(setClickDeleteButton(false));
+      dispatch(setClickCancelDeleteButton(false));
+      dispatch(setContent(response.data.content));
+      dispatch(setTotalPages(response.data.totalPages));
+    } catch (error) {
+      console.error("콘텐츠 데이터를 가져오는 중 오류가 발생했습니다:", error);
+    }
   };
 
   return { fetchContentData };

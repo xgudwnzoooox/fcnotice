@@ -54,7 +54,8 @@ export default function CreateUpdateContentForm(props) {
       dispatch(setImage(""));
       navigate(`/content/${response.data}`);
     } catch (error) {
-      console.error(error);
+      console.error("게시글 작성 또는 수정 중 오류가 발생했습니다:", error);
+      // 오류 처리 로직 추가
     }
   };
 

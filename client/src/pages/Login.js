@@ -1,5 +1,5 @@
 import axios from "axios";
-import "./Login.css"; // CSS 파일 import
+import "./Login.css";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
@@ -14,17 +14,23 @@ export default function Login() {
 
   const onSubmitHandler = async (e) => {
     e.preventDefault();
-    await axios.post(
-      `http://localhost:4000/login/firstAccessToken`,
-      { email, password },
-      { withCredentials: true }
-    );
 
-    dispatch(setIsLogin(true));
+    try {
+      await axios.post(
+        `http://localhost:4000/login/firstAccessToken`,
+        { email, password },
+        { withCredentials: true }
+      );
 
-    setEmail("");
-    setPassword("");
-    navigate(`/`);
+      dispatch(setIsLogin(true));
+
+      setEmail("");
+      setPassword("");
+      navigate(`/`);
+    } catch (error) {
+      console.error("로그인 중 오류가 발생했습니다:", error);
+      // 오류 처리 로직 추가
+    }
   };
 
   return (

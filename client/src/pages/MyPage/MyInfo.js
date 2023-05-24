@@ -7,16 +7,21 @@ export default function MyInfo() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
 
-  const fetchData = async () => {
-    const response = await axios.get(`http://localhost:4000/login/myinfo`, {
-      withCredentials: true,
-    });
-
-    setName(response.data.name);
-    setEmail(response.data.email);
-  };
-
   useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(`http://localhost:4000/login/myinfo`, {
+          withCredentials: true,
+        });
+
+        setName(response.data.name);
+        setEmail(response.data.email);
+      } catch (error) {
+        console.error("사용자 정보를 가져오는 중 오류가 발생했습니다:", error);
+        // 오류 처리 로직 추가
+      }
+    };
+
     fetchData();
   }, []);
 

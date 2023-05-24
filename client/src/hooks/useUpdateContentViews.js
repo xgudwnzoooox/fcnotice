@@ -8,12 +8,16 @@ export default function useUpdateContentViews() {
   const contentId = useSelector((state) => state.contentId.value);
 
   const updateContentViews = async () => {
-    if (views) {
-      await axios.put("http://localhost:4000/content", {
-        contentId,
-      });
-      dispatch(setViews(false));
+    try {
+      if (views) {
+        await axios.put(`http://localhost:4000/content/${contentId}/views`);
+        dispatch(setViews(false));
+      }
+    } catch (error) {
+      console.error("콘텐츠 조회수 업데이트 중 오류가 발생했습니다:", error);
+      // 오류 처리 로직 추가
     }
   };
+
   return { updateContentViews };
 }
