@@ -14,10 +14,6 @@ function Content() {
   const { id } = useParams();
   const dispatch = useDispatch();
   dispatch(setContentId(id));
-  // const { checkAccess } = useCheckAccess();
-  // useEffect(() => {
-  //   checkAccess();
-  // }, []);
   useCheckAccess();
 
   const contentId = useSelector((state) => state.contentId.value);
