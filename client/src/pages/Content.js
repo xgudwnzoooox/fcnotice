@@ -14,6 +14,11 @@ function Content() {
   const { id } = useParams();
   const dispatch = useDispatch();
   dispatch(setContentId(id));
+
+  // 질문1
+  // alert가 두 번 일어남
+  // 로그인이 된 유저인지 확인하는 프로세스
+  // 어떻게 해야 한 번만 alert가 생길지 궁금합니다.
   useCheckAccess();
 
   const contentId = useSelector((state) => state.contentId.value);
